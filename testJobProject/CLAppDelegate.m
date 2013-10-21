@@ -7,16 +7,59 @@
 //
 
 #import "CLAppDelegate.h"
+#import "ListViewController.h"
+#import "CLServiceController.h"
+#import "CLPageAppViewController.h"
+#import "CLGallaryViewController.h"
+
+
 
 @implementation CLAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    UIWindow * window=[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window =window;
+    [window release];
     // Override point for customization after application launch.
+    
+    
+    UITabBarController * tabBarController=[[UITabBarController alloc] init];
+    
+//----------------------
+    ListViewController * listView=[[ListViewController alloc]init];
+    UINavigationController * navigationControllerList=[[UINavigationController alloc] init];
+    [navigationControllerList setViewControllers:[NSArray arrayWithObject:listView]];
+//----------------------
+    
+    //CLGalleryController * galleryView=[[CLGalleryController alloc]init];
+    CLServiceController * serviceView=[[CLServiceController alloc]init];
+    CLGallaryViewController * galleryView=[[CLGallaryViewController alloc] init];
+    [navigationControllerList.tabBarItem setTitle:@"List"];
+    [navigationControllerList.tabBarItem setImage:[UIImage imageNamed:@"contact_card.png"]];
+    [galleryView.tabBarItem setTitle:@"Gallery"];
+    [galleryView.tabBarItem setImage:[UIImage imageNamed:@"picture.png"]];
+    [serviceView.tabBarItem setTitle:@"Service"];
+    [serviceView.tabBarItem setImage:[UIImage imageNamed:@"domain.png"]];
+    
+    [tabBarController setViewControllers:[NSArray arrayWithObjects:navigationControllerList,galleryView,serviceView, nil]];
+    
+    [self.window addSubview:tabBarController.view];
+    [self.window setRootViewController:tabBarController];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    [listView release];
+    [galleryView release];
+    [serviceView release];
+    [tabBarController release];
+    [navigationControllerList release];
     return YES;
+}
+
+-(void) dealloc
+{
+    self.window=nil;
+    [super dealloc];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

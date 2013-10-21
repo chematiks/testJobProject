@@ -1,0 +1,614 @@
+//
+//  CLDetailListViewController.m
+//  testJobProject
+//
+//  Created by Администратор on 9/26/13.
+//  Copyright (c) 2013 ChematiksLabs. All rights reserved.
+//
+
+#import "CLDetailListViewController.h"
+#import "CLDataBaseDelegate.h"
+#import "resourse.h"
+#import "Direction.h"
+#import "Worker.h"
+#import "Bookkeeping.h"
+#import "constants.h"
+
+#define directionIndex 0
+#define workerIndex 1
+#define bookkeepingIndex 2
+#define pickerUpX pickerDownX-49-162
+#define pickerDownX [[UIScreen mainScreen]bounds].size.height
+#define animation UIViewAnimationOptionAllowAnimatedContent
+
+
+@interface CLDetailListViewController ()
+
+@property (retain, nonatomic) resourse * staff;
+
+@end
+
+@implementation CLDetailListViewController
+
+//customize interface
+-(void) initInterfaceLabelAndField
+{
+    timeFormat=[[NSDateFormatter alloc] init];
+    [timeFormat setDateFormat:@"HH:mm"];
+    
+    [labelDetailTimeFrom removeFromSuperview];
+    [labelSeatNumber removeFromSuperview];
+    [fieldSeatNumber removeFromSuperview];
+    [labelTypeBuch removeFromSuperview];
+    [fieldTypeBuch removeFromSuperview];
+    
+    labelDetailTimeFrom=[[UILabel alloc] initWithFrame:CGRectMake(20.0, 285.0, 120.0, 21.0)];
+    labelDetailTimeFrom.font=[UIFont systemFontOfSize:14];
+    labelDetailTimeFrom.textColor=[UIColor blackColor];
+    
+    labelDetailTimeTo=[[UILabel alloc] initWithFrame:CGRectMake(220.0, 285.0, 30.0, 21.0)];
+    labelDetailTimeTo.font=[UIFont systemFontOfSize:14];
+    labelDetailTimeTo.textColor=[UIColor blackColor];
+    labelDetailTimeTo.text=@"до:";
+    
+    fieldDetailTimeFrom=[[UITextField alloc] initWithFrame:CGRectMake(135, 281, 60, 30)];
+    fieldDetailTimeFrom.borderStyle=UITextBorderStyleRoundedRect;
+    fieldDetailTimeFrom.font=[UIFont systemFontOfSize:14];
+    fieldDetailTimeFrom.delegate=self;
+
+    fieldDetailTimeTo=[[UITextField alloc] initWithFrame:CGRectMake(245, 281, 60, 30)];
+    fieldDetailTimeTo.borderStyle=UITextBorderStyleRoundedRect;
+    fieldDetailTimeTo.font=[UIFont systemFontOfSize:14];
+    fieldDetailTimeTo.delegate=self;
+    
+    [self.view addSubview:labelDetailTimeTo];
+    [self.view addSubview:fieldDetailTimeFrom];
+    [self.view addSubview:fieldDetailTimeTo];
+    
+    labelSeatNumber=[[UILabel alloc] initWithFrame:CGRectMake(20.0, 320.0, 180.0, 21.0)];
+    labelSeatNumber.font=[UIFont systemFontOfSize:14];
+    labelSeatNumber.textColor=[UIColor blackColor];
+    labelSeatNumber.text=@"Номер рабочего места:";
+    fieldSeatNumber=[[UITextField alloc] initWithFrame:CGRectMake(205, 316, 100, 30)];
+    fieldSeatNumber.borderStyle=UITextBorderStyleRoundedRect;
+    fieldSeatNumber.font=[UIFont systemFontOfSize:14];
+    fieldSeatNumber.autocorrectionType=UITextAutocorrectionTypeNo;
+    fieldSeatNumber.keyboardType=UIKeyboardTypeNumberPad;
+    [fieldSeatNumber addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [fieldSeatNumber addTarget:self action:@selector(textFieldDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
+    [fieldSeatNumber addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
+    
+    labelTypeBuch=[[UILabel alloc] initWithFrame:CGRectMake(20.0, 355.0, 180.0, 21.0)];
+    labelTypeBuch.font=[UIFont systemFontOfSize:14];
+    labelTypeBuch.textColor=[UIColor blackColor];
+    labelTypeBuch.text=@"Тип бухгалтера:";
+    fieldTypeBuch=[[UITextField alloc] initWithFrame:CGRectMake(205, 351, 100, 30)];
+    fieldTypeBuch.borderStyle=UITextBorderStyleRoundedRect;
+    fieldTypeBuch.font=[UIFont systemFontOfSize:14];
+    fieldTypeBuch.autocorrectionType=UITextAutocorrectionTypeNo;
+    [fieldTypeBuch addTarget:self action:@selector(textFieldDoneEditing:) forControlEvents:UIControlEventEditingDidEndOnExit];
+    [fieldTypeBuch addTarget:self action:@selector(textFieldDidBeginEditing:) forControlEvents:UIControlEventEditingDidBegin];
+    [fieldTypeBuch addTarget:self action:@selector(textFieldDidEndEditing:) forControlEvents:UIControlEventEditingDidEnd];
+    
+    [self.navigationItem setTitle:@"Detail"];
+    
+    [self.view addSubview:labelDetailTimeFrom];
+    [self.view addSubview:labelSeatNumber];
+    [self.view addSubview:fieldSeatNumber];
+    [self.view addSubview:labelTypeBuch];
+    [self.view addSubview:fieldTypeBuch];
+    [self createPicker];
+}
+
+//hidden all keyboards
+-(BOOL) textFieldShouldBeginEditing:(UITextField *) textField
+{
+    if (textField==fieldDetailTimeFrom || textField==fieldDetailTimeTo)
+    {
+        [self.surnameField resignFirstResponder];
+        [self.nameLabel resignFirstResponder];
+        [self.patronymicLabel resignFirstResponder];
+        [fieldSeatNumber resignFirstResponder];
+        [fieldTypeBuch resignFirstResponder];
+        [self upTimePicker:textField];
+        return NO;
+    }
+    return YES;
+}
+
+//if press button return, switch to next textField
+-(BOOL) textFieldShouldReturn:(UITextField *)textField
+{
+    if (textField==self.surnameField)
+    {
+        UIResponder * nextResponder=self.nameLabel;
+        [nextResponder becomeFirstResponder];
+        return NO;
+    }
+    else
+        if (textField==self.nameLabel)
+        {
+            UIResponder * nextResponder=self.patronymicLabel;
+            [nextResponder becomeFirstResponder];
+            return NO;
+        }
+        else
+            if (textField==self.patronymicLabel)
+            {
+                UIResponder * nextResponder=self.salaryLabel;
+                [nextResponder becomeFirstResponder];
+                return NO;
+            }
+    return YES;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+    self.surnameField.delegate=self;
+    self.nameLabel.delegate=self;
+    self.patronymicLabel.delegate=self;
+    self.salaryLabel.delegate=self;
+    fieldDetailTimeFrom.delegate=self;
+    fieldDetailTimeTo.delegate=self;
+    fieldSeatNumber.delegate=self;
+    fieldTypeBuch.delegate=self;
+
+    //add button to navigation bar
+    UIBarButtonItem * editButton=[[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(unlockInterface:)];
+    [self.navigationItem setRightBarButtonItem:editButton];
+    
+}
+
+//load default data
+-(void) initDataInDetailView:(id) object
+{
+    [self initInterfaceLabelAndField];
+    [self lockInterface];
+    [self setBasicField:object];
+    if ([object class]==[Direction class])
+    {
+        [self setDirectionData:object];
+    }
+    else
+        if ([object class]==[Worker class])
+        {
+            [self setWorkerData:object];
+        }
+        else
+            if ([object class]==[Bookkeeping class])
+            {
+                [self setBookkeepingData:object];
+            }
+            else
+            {
+                [self unlockInterface:nil];
+            }
+    [self changeTypeList:self.segmentControl];
+}
+
+-(void) setBasicField:(resourse *)object
+{
+    self.surnameField.text=object.surname;
+    self.nameLabel.text=object.name;
+    self.patronymicLabel.text=object.patronymic;
+    self.salaryLabel.text=[object.salary stringValue];
+}
+
+-(void) setDirectionData:(Direction *)object
+{
+    self.segmentControl.selectedSegmentIndex=directionIndex;
+    fieldDetailTimeFrom.text=[timeFormat stringFromDate:object.businessHourStart];
+    fieldDetailTimeTo.text=[timeFormat stringFromDate:object.businessHourFinish];
+}
+
+-(void) setWorkerData:(Worker *)object
+{
+    self.segmentControl.selectedSegmentIndex=workerIndex;
+    fieldSeatNumber.text=[object.seatNumber stringValue];
+    fieldDetailTimeFrom.text=[timeFormat stringFromDate:object.dinnerTimeStart];
+    fieldDetailTimeTo.text=[timeFormat stringFromDate:object.dinnerTimeFinish];
+}
+
+-(void) setBookkeepingData:(Bookkeeping *)object
+{
+    self.segmentControl.selectedSegmentIndex=bookkeepingIndex;
+    fieldSeatNumber.text=[object.seatNumber stringValue];
+    fieldTypeBuch.text=object.typeBookkeeping;
+    fieldDetailTimeFrom.text=[timeFormat stringFromDate:object.dinnerTimeStart];
+    fieldDetailTimeTo.text=[timeFormat stringFromDate:object.dinnerTimeFinish];
+}
+
+//method lock interface
+-(void) lockInterface
+{
+    self.nameLabel.enabled=NO;
+    self.surnameField.enabled=NO;
+    self.patronymicLabel.enabled=NO;
+    self.salaryLabel.enabled=NO;
+    self.segmentControl.enabled=NO;
+    fieldDetailTimeFrom.enabled=NO;
+    fieldDetailTimeTo.enabled=NO;
+    fieldSeatNumber.enabled=NO;
+    fieldTypeBuch.enabled=NO;
+}
+
+//method unlock interface and add button save
+-(void) unlockInterface:(id)sender
+{
+    UIBarButtonItem * saveButton=[[UIBarButtonItem alloc]
+                                  initWithTitle:@"Save"
+                                  style:UIBarButtonItemStylePlain
+                                  target:self
+                                  action:@selector(saveButtonPress:)];
+    [self.navigationItem setRightBarButtonItem:saveButton];
+    self.nameLabel.enabled=YES;
+    self.surnameField.enabled=YES;
+    self.patronymicLabel.enabled=YES;
+    self.salaryLabel.enabled=YES;
+    self.segmentControl.enabled=YES;
+    fieldDetailTimeFrom.enabled=YES;
+    fieldDetailTimeTo.enabled=YES;
+    fieldSeatNumber.enabled=YES;
+    fieldTypeBuch.enabled=YES;
+}
+
+//method save data
+-(void) saveButtonPress:(id)sender
+{
+    NSString * currentEntity;
+    NSMutableArray * objects=[NSMutableArray arrayWithObjects:self.surnameField.text,
+                       self.nameLabel.text,
+                       self.patronymicLabel.text,
+                       [NSNumber numberWithInt:[self.salaryLabel.text intValue]],
+                       [timeFormat dateFromString:fieldDetailTimeFrom.text],
+                       [timeFormat dateFromString:fieldDetailTimeTo.text], nil];
+    NSMutableArray * keys=[NSMutableArray arrayWithObjects:kSurname,
+                    kName,
+                    kPatronymic,
+                    kSalary, nil];
+    if (self.segmentControl.selectedSegmentIndex==directionIndex)
+    {
+        currentEntity=eDirection;
+        [keys addObject:kBusinessHourStart];
+        [keys addObject:kBusinessHourFinish];
+    }
+    else
+    {
+        currentEntity=eWorker;
+        [objects addObject:[NSNumber numberWithInt:[fieldSeatNumber.text intValue]]];
+        [keys addObject:kDinnerTimeStart];
+        [keys addObject:kDinnerTimeFinish];
+        [keys addObject:kSeatNumber];
+        if (self.segmentControl.selectedSegmentIndex==bookkeepingIndex)
+        {
+            currentEntity=eBookkeepping;
+            [objects addObject:fieldTypeBuch.text];
+            [keys addObject:kTypeBookkeeping];
+        }
+    }
+    [objects addObject:currentEntity];
+    [keys addObject:kCategory];
+    
+    if ([objects count]<[keys count])
+    {
+        UIAlertView * alert=[[UIAlertView alloc] initWithTitle:@"Внимание!"
+                                                       message:@"Заполните пожалуйста все поля"
+                                                      delegate:self
+                                             cancelButtonTitle:@"OK"
+                                             otherButtonTitles: nil];
+        [alert show];
+        [alert release];
+        return;
+    }
+    
+    NSDictionary * currentObject=[NSDictionary dictionaryWithObjects:objects forKeys:keys];
+    [[CLDataBaseDelegate sharedDB] createEntytiWithClassName:currentEntity attributesDictionary:currentObject];
+    
+    if ([[CLDataBaseDelegate sharedDB] getCurrentObject])
+    {
+        [[CLDataBaseDelegate sharedDB] deleteEntity:[[CLDataBaseDelegate sharedDB] getCurrentObject]];
+    }
+    [[CLDataBaseDelegate sharedDB] saveDataInManagedContext];
+    [[self navigationController] popToRootViewControllerAnimated:YES];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+}
+
+//init element interface at change selected segment controll
+- (IBAction)changeTypeList:(id)sender
+{
+    NSInteger selectedSegment=self.segmentControl.selectedSegmentIndex;
+    if (selectedSegment==directionIndex)
+        [self addDirectionDetail];
+    if (selectedSegment==workerIndex)
+        [self addWorkerDetail];
+    if (selectedSegment==bookkeepingIndex)
+        [self addBookkeeperDetail];
+}
+
+-(void) addDirectionDetail
+{
+    labelDetailTimeFrom.text=@"Часы приема с:";
+    fieldTypeBuch.hidden=YES;
+    labelTypeBuch.hidden=YES;
+    labelSeatNumber.hidden=YES;
+    fieldSeatNumber.hidden=YES;
+}
+
+-(void) addWorkerDetail
+{
+    labelDetailTimeFrom.text=@"Время обеда с:";
+    fieldTypeBuch.hidden=YES;
+    labelTypeBuch.hidden=YES;
+    labelSeatNumber.hidden=NO;
+    fieldSeatNumber.hidden=NO;
+}
+
+-(void) addBookkeeperDetail
+{
+    [self addWorkerDetail];
+    fieldTypeBuch.hidden=NO;
+    labelTypeBuch.hidden=NO;
+    labelSeatNumber.hidden=NO;
+    fieldSeatNumber.hidden=NO;
+}
+
+- (void)dealloc
+{
+    [_segmentControl release];
+    [_nameLabel release];
+    [_patronymicLabel release];
+    [_salaryLabel release];
+    [super dealloc];
+}
+
+//resign keyboard after press button done
+-(IBAction)textFieldDoneEditing:(id)sender
+{
+    currentTextField=nil;
+    [sender resignFirstResponder];
+    [self textFieldDidEndEditing:nil];
+}
+
+//moving main view to default coordination
+- (IBAction)textFieldDidEndEditing:(UITextField *)sender
+{
+    [self.salaryLabel resignFirstResponder];
+    [fieldSeatNumber resignFirstResponder];
+    [UIView transitionWithView:self.view
+                      duration:0.5f
+                       options:animation
+                    animations:^{
+                        CGRect rect=self.view.frame;
+                        rect.origin.y=[self getDeltaY:currentTextField];
+                        self.view.frame=rect;
+                        rect=pickerTimeView.frame;
+                        rect.origin.y=pickerDownX;
+                        pickerTimeView.frame=rect;
+                    }
+                    completion:NULL];
+}
+
+//moving main view up
+- (IBAction)textFieldDidBeginEditing:(UITextField *)sender
+{
+    fieldDetailTimeFrom.backgroundColor=[UIColor whiteColor];
+    fieldDetailTimeTo.backgroundColor=[UIColor whiteColor];
+    currentTextField=sender;
+    [UIView transitionWithView:self.view
+                      duration:0.5f
+                       options:animation
+                    animations:^{
+                        CGRect rect=self.view.frame;
+                        rect.origin.y=[self getDeltaY:sender];
+                        if (currentTextField==fieldSeatNumber || currentTextField==self.salaryLabel)
+                            [self upToolbarWithNumberPad:currentTextField];
+                        self.view.frame=rect;
+                    }
+                    completion:NULL];
+}
+
+//get delta Y
+-(float) getDeltaY:(UITextField *) sender
+{
+    float deltaY=0;
+    if (sender==_salaryLabel)
+        deltaY=-(10+44);
+    if (sender==fieldDetailTimeFrom||sender==fieldDetailTimeTo)
+        deltaY=-44.f;
+    if (sender==fieldSeatNumber)
+        deltaY=-(85+44);
+    if (sender==fieldTypeBuch)
+        deltaY=-120.f;
+    if ([[UIScreen mainScreen]bounds].size.height==568)
+        deltaY=deltaY+88;
+    if (deltaY>0)
+        deltaY=0;
+    return deltaY;
+}
+
+//create toolbar
+-(void) createToolbar
+{
+    pickerTimeView=[[UIView alloc] initWithFrame:CGRectMake(0,pickerDownX,320,142)];
+    pickerTimeView.backgroundColor=[UIColor colorWithRed:0.73 green:0.835 blue:0.992 alpha:0.9];
+    
+    toolbar=[[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    toolbar.barStyle=UIBarStyleBlackTranslucent;
+    toolbar.backgroundColor=[UIColor colorWithRed:0.73 green:0.835 blue:0.992 alpha:0.9];
+    toolbar.barTintColor=[UIColor colorWithRed:0.73 green:0.835 blue:0.992 alpha:0.9];
+    [toolbar sizeToFit];
+    
+    UIBarButtonItem * buttonCancel=[[UIBarButtonItem alloc]
+                                    initWithTitle:@"Done"
+                                    style:UIBarButtonItemStyleBordered
+                                    target:self
+                                    action:@selector(downButtonPress:)];
+    
+    UIBarButtonItem * buttonValueChange=[[UIBarButtonItem alloc]
+                                         initWithTitle:@"Edit"
+                                         style:UIBarButtonItemStyleBordered
+                                         target:self
+                                         action:@selector(valueChangeTimePicker:)];
+    
+    UIBarButtonItem * spaceItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    [spaceItem setWidth:210];
+    NSArray * toolbarItems=[[NSArray alloc] initWithObjects:buttonCancel,spaceItem,buttonValueChange, nil];
+    
+    [buttonCancel release];
+    [buttonValueChange release];
+    [spaceItem release];
+    
+    [toolbar setItems:toolbarItems];
+    
+    [toolbarItems release];
+}
+
+//if press button done, shift focus to next textfield
+-(void) downButtonPress:(id)sender
+{
+    if (currentTextField==self.salaryLabel)
+    {
+        UIResponder * nextResponder=fieldDetailTimeFrom;
+        [nextResponder becomeFirstResponder];
+    }
+    else
+        if (currentTextField==fieldDetailTimeFrom)
+        {
+            UIResponder * nextResponder=fieldDetailTimeTo;
+            [nextResponder becomeFirstResponder];
+        }
+        else
+            if (currentTextField==fieldDetailTimeTo)
+            {
+                UIResponder * nextResponder=fieldSeatNumber;
+                [nextResponder becomeFirstResponder];
+            }
+            else
+                if (currentTextField==fieldSeatNumber)
+                {
+                    UIResponder * nextResponder=fieldTypeBuch;
+                    [nextResponder becomeFirstResponder];
+                }
+}
+
+//create picker
+-(void) createPicker
+{
+    [self createToolbar];
+    picker=[[UIDatePicker alloc] initWithFrame:CGRectMake(70, -10, 250, 162)];
+    [picker addTarget:self action:nil forControlEvents:UIControlEventValueChanged];
+    picker.datePickerMode=UIDatePickerModeCountDownTimer;
+    
+    [pickerTimeView addSubview:picker];
+    [pickerTimeView addSubview:toolbar];
+    
+    [self.view addSubview:pickerTimeView];
+}
+
+//if press button save in toolbar
+-(IBAction)valueChangeTimePicker:(id)sender
+{
+    currentTextField.text=[timeFormat stringFromDate:[picker date]];
+    [self downTimePicker:nil];
+}
+
+//show and hiddenbutton save in toolbar
+-(void) showButtonSaveInToolbar:(BOOL) show
+{
+    UIBarButtonItem * buttonValueChange=[toolbar.items objectAtIndex:2];
+    if (show)
+    {
+        buttonValueChange.style=UIBarButtonItemStyleBordered;
+        buttonValueChange.enabled=YES;
+        buttonValueChange.title=@"Edit";
+    }
+    else
+    {
+        buttonValueChange.style=UIBarButtonItemStylePlain;
+        buttonValueChange.enabled=NO;
+        buttonValueChange.title=nil;
+    }
+}
+
+//up toolbar for salary and seat number text field
+-(IBAction) upToolbarWithNumberPad:(id) sender
+{
+    [self showButtonSaveInToolbar:NO];
+    [self showTimePicker:NO];
+    currentTextField=sender;
+    [UIView transitionWithView:pickerTimeView
+                      duration:0.5f
+                       options:animation
+                    animations:^{
+                        CGRect rect=pickerTimeView.frame;
+                        rect.origin.y=pickerUpX-[self getDeltaY:currentTextField]-49;
+                        pickerTimeView.frame=rect;
+                    }
+                    completion:NULL];
+}
+
+//down toolbar for salary and seat number text field
+-(IBAction) downToolbarWithNumberPad:(id)sender
+{
+    currentTextField=nil;
+    [self textFieldDidEndEditing:currentTextField];
+    [self showButtonSaveInToolbar:YES];
+    [self showTimePicker:YES];
+}
+
+//show and hidden picker
+-(void) showTimePicker:(BOOL) show
+{
+    picker.hidden=!show;
+}
+
+//up moving toolbar with time picker
+-(IBAction)upTimePicker:(id)sender
+{
+    if (currentTextField)
+        currentTextField.backgroundColor=[UIColor whiteColor];
+    [self.salaryLabel resignFirstResponder];
+    [fieldSeatNumber resignFirstResponder];
+    [self showButtonSaveInToolbar:YES];
+    [self showTimePicker:YES];
+    currentTextField=sender;
+    [self textFieldDidBeginEditing:currentTextField];
+    currentTextField.backgroundColor=[UIColor lightGrayColor];
+    if (![currentTextField.text isEqualToString:@""])
+        [picker setDate:[timeFormat dateFromString:currentTextField.text]];
+    [UIView transitionWithView:pickerTimeView
+                      duration:0.5f
+                       options:animation
+                    animations:^{
+                        CGRect rect=pickerTimeView.frame;
+                        rect.origin.y=pickerUpX-[self getDeltaY:currentTextField];
+                        pickerTimeView.frame=rect;
+                    }
+                    completion:NULL];
+}
+
+//down moving toolbar with time picker
+-(IBAction)downTimePicker:(id)sender
+{
+    fieldDetailTimeFrom.backgroundColor=[UIColor whiteColor];
+    fieldDetailTimeTo.backgroundColor=[UIColor whiteColor];
+    
+    [UIView transitionWithView:pickerTimeView
+                      duration:0.5f
+                       options:animation
+                    animations:^{
+                        CGRect rect=pickerTimeView.frame;
+                        rect.origin.y=pickerDownX;
+                        pickerTimeView.frame=rect;
+                    }
+                    completion:NULL];
+    [self textFieldDidEndEditing:currentTextField];
+}
+
+@end
