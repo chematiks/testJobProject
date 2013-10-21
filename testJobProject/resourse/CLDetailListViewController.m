@@ -445,13 +445,13 @@
     [toolbar sizeToFit];
     
     UIBarButtonItem * buttonCancel=[[UIBarButtonItem alloc]
-                                    initWithTitle:@"Done"
+                                    initWithTitle:@"Cancel"
                                     style:UIBarButtonItemStyleBordered
                                     target:self
                                     action:@selector(downButtonPress:)];
     
     UIBarButtonItem * buttonValueChange=[[UIBarButtonItem alloc]
-                                         initWithTitle:@"Edit"
+                                         initWithTitle:@"Set"
                                          style:UIBarButtonItemStyleBordered
                                          target:self
                                          action:@selector(valueChangeTimePicker:)];
@@ -526,7 +526,7 @@
     {
         buttonValueChange.style=UIBarButtonItemStyleBordered;
         buttonValueChange.enabled=YES;
-        buttonValueChange.title=@"Edit";
+        buttonValueChange.title=@"Set";
     }
     else
     {
