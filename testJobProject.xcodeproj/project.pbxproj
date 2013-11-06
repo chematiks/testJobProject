@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8465A425182A3E4900332F67 /* CLServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8465A424182A3E4900332F67 /* CLServiceViewController.m */; };
 		C3670C7017F13D7000F96F6D /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3670C5E17F13D7000F96F6D /* 1.jpg */; };
 		C3670C7117F13D7000F96F6D /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3670C5F17F13D7000F96F6D /* 2.jpg */; };
 		C3670C7217F13D7000F96F6D /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3670C6017F13D7000F96F6D /* 3.jpg */; };
@@ -88,6 +89,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8465A423182A3E4900332F67 /* CLServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLServiceViewController.h; sourceTree = "<group>"; };
+		8465A424182A3E4900332F67 /* CLServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLServiceViewController.m; sourceTree = "<group>"; };
 		C3670C5E17F13D7000F96F6D /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		C3670C5F17F13D7000F96F6D /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		C3670C6017F13D7000F96F6D /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
@@ -254,6 +257,8 @@
 				C3D21FC117F0AAAE0016EFAD /* CLServiceController.h */,
 				C3D21FC217F0AAAE0016EFAD /* CLServiceController.m */,
 				C3D21FC317F0AAAE0016EFAD /* CLServiceController.xib */,
+				8465A423182A3E4900332F67 /* CLServiceViewController.h */,
+				8465A424182A3E4900332F67 /* CLServiceViewController.m */,
 			);
 			name = Service;
 			path = resourse;
@@ -599,6 +604,7 @@
 				C3E76BCF17F49B000053BBF7 /* CLDetailListViewController.m in Sources */,
 				C3FB6FE3180BB1E30035F79A /* resourse.m in Sources */,
 				C3FB6FE9180BB1E40035F79A /* Worker.m in Sources */,
+				8465A425182A3E4900332F67 /* CLServiceViewController.m in Sources */,
 				C39487521814527D00B0B8FC /* CLListTableViewCell.m in Sources */,
 				C3D21F8E17F096700016EFAD /* main.m in Sources */,
 				C3FB6FE0180BB1E30035F79A /* Bookkeeping.m in Sources */,

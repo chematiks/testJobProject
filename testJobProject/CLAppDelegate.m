@@ -8,9 +8,10 @@
 
 #import "CLAppDelegate.h"
 #import "ListViewController.h"
-#import "CLServiceController.h"
+//#import "CLServiceController.h"
 #import "CLPageAppViewController.h"
 #import "CLGallaryViewController.h"
+#import "CLServiceViewController.h"
 
 
 
@@ -33,7 +34,7 @@
 //----------------------
     
     //CLGalleryController * galleryView=[[CLGalleryController alloc]init];
-    CLServiceController * serviceView=[[CLServiceController alloc]init];
+    CLServiceViewController * serviceView=[[CLServiceViewController alloc]init];
     CLGallaryViewController * galleryView=[[CLGallaryViewController alloc] init];
     [navigationControllerList.tabBarItem setTitle:@"List"];
     [navigationControllerList.tabBarItem setImage:[UIImage imageNamed:@"contact_card.png"]];
