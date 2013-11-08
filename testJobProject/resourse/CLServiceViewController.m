@@ -9,6 +9,7 @@
 #import "CLServiceViewController.h"
 #import "CLBashData.h"
 #import "DDXML.h"
+#import "CLServiceCell.h"
 
 #define statusBarHeight 20
 #define tabBarHeigth 49
@@ -33,6 +34,7 @@
         self.tableView=[[UITableView alloc] initWithFrame:
                         CGRectMake(0, statusBarHeight, screen.width, screen.height-statusBarHeight-tabBarHeigth)];
         self.tableView.dataSource=self;
+        self.tableView.delegate=self;
         [self.view addSubview:self.tableView];
         [self.view addSubview:self.trobber];
         [self.trobber startAnimating];
@@ -104,6 +106,45 @@
     [self performSelectorOnMainThread:@selector(showText) withObject:nil waitUntilDone:YES];
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self calculationHeightCell:indexPath]+2*2+10;
+}
+
+-(int) calculationHeightCell:(NSIndexPath *) indexPath
+{
+    UITextView * textViewInCell=[[UITextView alloc] initWithFrame:CGRectMake(10, 8, 300, 100)];
+    CLBashData * bash=[self.arrayNote objectAtIndex:indexPath.row];
+    textViewInCell.text=bash.textNote;
+    
+    CGFloat fixedWidth=textViewInCell.frame.size.width;
+    CGSize newSize=[textViewInCell sizeThatFits:CGSizeMake(fixedWidth, 100)];
+    CGRect newframe=textViewInCell.frame;
+    newframe.size=CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+    textViewInCell.frame=newframe;
+    return textViewInCell.frame.size.height+20;
+    return 44+5*indexPath.row;
+}
+
+-(void) makeBackgroundCell:(CLServiceCell *) cell indexPath:(NSIndexPath *)indexPath
+{
+    UIImage *imageBackground;
+    UIImage * resizebleBackgroundImage;
+    if (indexPath.row%2==1){
+        imageBackground=[UIImage imageNamed:@"grayMessage.png"];
+        resizebleBackgroundImage=[imageBackground  resizableImageWithCapInsets:UIEdgeInsetsMake(35, 57, 35, 46)];
+    }else{
+        imageBackground=[UIImage imageNamed:@"blueMessage.png"];
+        resizebleBackgroundImage=[imageBackground  resizableImageWithCapInsets:UIEdgeInsetsMake(35, 46, 35, 57)];
+    }
+    UIImageView * backgroundImageView=[[UIImageView alloc] initWithImage:resizebleBackgroundImage];
+    CGRect rect=CGRectMake(0, 2+10, cell.frame.size.width, [self calculationHeightCell:indexPath]);
+    backgroundImageView.frame=rect;
+
+    [cell addSubview:backgroundImageView];
+    [cell sendSubviewToBack:backgroundImageView];
+}
+
 //show data and trobber off
 -(void) showText
 {
@@ -119,11 +160,28 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier = @"Cell";
-    UITableViewCell * cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    CLServiceCell * cell=[[CLServiceCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     CLBashData * bash=[self.arrayNote objectAtIndex:indexPath.row];
 
-    cell.textLabel.text=bash.textNote;
+    cell.numberLabel.text=[NSString stringWithFormat:@"#%@",bash.idNote];
+    cell.dateLabel.text=bash.dateNote;
     
+    UITextView * textViewInCell=[[UITextView alloc] initWithFrame:CGRectMake(10, 8+10, 300, 100)];
+    textViewInCell.text=bash.textNote;
+
+    [cell addSubview:textViewInCell];
+    cell.textView=textViewInCell;
+  
+    CGFloat fixedWidth=textViewInCell.frame.size.width;
+    CGSize newSize=[textViewInCell sizeThatFits:CGSizeMake(fixedWidth, 100)];
+    CGRect newframe=textViewInCell.frame;
+    newframe.size=CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
+    textViewInCell.frame=newframe;
+    
+    [self makeBackgroundCell:cell indexPath:indexPath];
+
+    textViewInCell.backgroundColor=[UIColor clearColor];
+    textViewInCell.scrollEnabled=NO;
     return [cell autorelease];
 }
 

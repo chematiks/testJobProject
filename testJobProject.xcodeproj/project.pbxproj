@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8465A425182A3E4900332F67 /* CLServiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8465A424182A3E4900332F67 /* CLServiceViewController.m */; };
+		84E6005C182B6BEB00AB7B2C /* CLServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E6005B182B6BEB00AB7B2C /* CLServiceCell.m */; };
+		84E60062182CCCA800AB7B2C /* blueMessage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84E60061182CCCA800AB7B2C /* blueMessage.png */; };
+		84E60064182CCCB400AB7B2C /* grayMessage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84E60063182CCCB400AB7B2C /* grayMessage.png */; };
 		C3670C7017F13D7000F96F6D /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3670C5E17F13D7000F96F6D /* 1.jpg */; };
 		C3670C7117F13D7000F96F6D /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3670C5F17F13D7000F96F6D /* 2.jpg */; };
 		C3670C7217F13D7000F96F6D /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3670C6017F13D7000F96F6D /* 3.jpg */; };
@@ -91,6 +94,10 @@
 /* Begin PBXFileReference section */
 		8465A423182A3E4900332F67 /* CLServiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLServiceViewController.h; sourceTree = "<group>"; };
 		8465A424182A3E4900332F67 /* CLServiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLServiceViewController.m; sourceTree = "<group>"; };
+		84E6005A182B6BEB00AB7B2C /* CLServiceCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLServiceCell.h; sourceTree = "<group>"; };
+		84E6005B182B6BEB00AB7B2C /* CLServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLServiceCell.m; sourceTree = "<group>"; };
+		84E60061182CCCA800AB7B2C /* blueMessage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueMessage.png; path = testJobProject/blueMessage.png; sourceTree = SOURCE_ROOT; };
+		84E60063182CCCB400AB7B2C /* grayMessage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayMessage.png; path = testJobProject/grayMessage.png; sourceTree = SOURCE_ROOT; };
 		C3670C5E17F13D7000F96F6D /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		C3670C5F17F13D7000F96F6D /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		C3670C6017F13D7000F96F6D /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
@@ -251,6 +258,8 @@
 		C3670CDA17F2A68300F96F6D /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				84E60063182CCCB400AB7B2C /* grayMessage.png */,
+				84E60061182CCCA800AB7B2C /* blueMessage.png */,
 				C3BE31751806915800C39B88 /* KissXML */,
 				C3CED0C117F2B9A9002EB8FF /* CLBashData.h */,
 				C3CED0C217F2B9A9002EB8FF /* CLBashData.m */,
@@ -259,6 +268,8 @@
 				C3D21FC317F0AAAE0016EFAD /* CLServiceController.xib */,
 				8465A423182A3E4900332F67 /* CLServiceViewController.h */,
 				8465A424182A3E4900332F67 /* CLServiceViewController.m */,
+				84E6005A182B6BEB00AB7B2C /* CLServiceCell.h */,
+				84E6005B182B6BEB00AB7B2C /* CLServiceCell.m */,
 			);
 			name = Service;
 			path = resourse;
@@ -559,10 +570,12 @@
 				C3670C7917F13D7000F96F6D /* 8.jpg in Resources */,
 				C3670C7B17F13D7000F96F6D /* 11.jpg in Resources */,
 				C3D21FD917F0B5250016EFAD /* picture.png in Resources */,
+				84E60062182CCCA800AB7B2C /* blueMessage.png in Resources */,
 				C3E7946618113B1D008F23A2 /* keyDoneHighlighted.png in Resources */,
 				C3670C7317F13D7000F96F6D /* 10.jpg in Resources */,
 				C3670C8017F13D7000F96F6D /* 17.jpg in Resources */,
 				C3E76BD017F49B000053BBF7 /* CLDetailListViewController.xib in Resources */,
+				84E60064182CCCB400AB7B2C /* grayMessage.png in Resources */,
 				C3D21FD317F0B4260016EFAD /* picture@2x.png in Resources */,
 				C3670C7617F13D7000F96F6D /* 15.jpg in Resources */,
 				C3670C7417F13D7000F96F6D /* 4.jpg in Resources */,
@@ -593,6 +606,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84E6005C182B6BEB00AB7B2C /* CLServiceCell.m in Sources */,
 				C3FB6FE6180BB1E30035F79A /* Direction.m in Sources */,
 				C3BE31891806915800C39B88 /* DDXMLNode.m in Sources */,
 				C3D5F8C1180A832500C6B40E /* CLDataBaseDelegate.m in Sources */,

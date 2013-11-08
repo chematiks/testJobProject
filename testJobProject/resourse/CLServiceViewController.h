@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CLServiceViewController : UIViewController <UITableViewDataSource>
+@interface CLServiceViewController : UIViewController <UITableViewDataSource,UITableViewDelegate>
 
 @property (nonatomic, retain) NSMutableArray * arrayNote;
 
