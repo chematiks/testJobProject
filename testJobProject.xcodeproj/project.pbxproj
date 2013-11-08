@@ -59,8 +59,6 @@
 		C3D21F9D17F096710016EFAD /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3D21F8517F096700016EFAD /* UIKit.framework */; };
 		C3D21FA517F096710016EFAD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = C3D21FA317F096710016EFAD /* InfoPlist.strings */; };
 		C3D21FA717F096710016EFAD /* testJobProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D21FA617F096710016EFAD /* testJobProjectTests.m */; };
-		C3D21FC417F0AAAE0016EFAD /* CLServiceController.m in Sources */ = {isa = PBXBuildFile; fileRef = C3D21FC217F0AAAE0016EFAD /* CLServiceController.m */; };
-		C3D21FC517F0AAAE0016EFAD /* CLServiceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C3D21FC317F0AAAE0016EFAD /* CLServiceController.xib */; };
 		C3D21FD117F0B4260016EFAD /* contact_card@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3D21FCE17F0B4260016EFAD /* contact_card@2x.png */; };
 		C3D21FD217F0B4260016EFAD /* domain@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3D21FCF17F0B4260016EFAD /* domain@2x.png */; };
 		C3D21FD317F0B4260016EFAD /* picture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C3D21FD017F0B4260016EFAD /* picture@2x.png */; };
@@ -160,9 +158,6 @@
 		C3D21FA217F096710016EFAD /* testJobProjectTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "testJobProjectTests-Info.plist"; sourceTree = "<group>"; };
 		C3D21FA417F096710016EFAD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		C3D21FA617F096710016EFAD /* testJobProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testJobProjectTests.m; sourceTree = "<group>"; };
-		C3D21FC117F0AAAE0016EFAD /* CLServiceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLServiceController.h; path = ../CLServiceController.h; sourceTree = "<group>"; };
-		C3D21FC217F0AAAE0016EFAD /* CLServiceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLServiceController.m; path = ../CLServiceController.m; sourceTree = "<group>"; };
-		C3D21FC317F0AAAE0016EFAD /* CLServiceController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CLServiceController.xib; path = ../CLServiceController.xib; sourceTree = "<group>"; };
 		C3D21FCE17F0B4260016EFAD /* contact_card@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact_card@2x.png"; sourceTree = "<group>"; };
 		C3D21FCF17F0B4260016EFAD /* domain@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "domain@2x.png"; sourceTree = "<group>"; };
 		C3D21FD017F0B4260016EFAD /* picture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "picture@2x.png"; sourceTree = "<group>"; };
@@ -258,18 +253,15 @@
 		C3670CDA17F2A68300F96F6D /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				84E60063182CCCB400AB7B2C /* grayMessage.png */,
-				84E60061182CCCA800AB7B2C /* blueMessage.png */,
 				C3BE31751806915800C39B88 /* KissXML */,
 				C3CED0C117F2B9A9002EB8FF /* CLBashData.h */,
 				C3CED0C217F2B9A9002EB8FF /* CLBashData.m */,
-				C3D21FC117F0AAAE0016EFAD /* CLServiceController.h */,
-				C3D21FC217F0AAAE0016EFAD /* CLServiceController.m */,
-				C3D21FC317F0AAAE0016EFAD /* CLServiceController.xib */,
 				8465A423182A3E4900332F67 /* CLServiceViewController.h */,
 				8465A424182A3E4900332F67 /* CLServiceViewController.m */,
 				84E6005A182B6BEB00AB7B2C /* CLServiceCell.h */,
 				84E6005B182B6BEB00AB7B2C /* CLServiceCell.m */,
+				84E60063182CCCB400AB7B2C /* grayMessage.png */,
+				84E60061182CCCA800AB7B2C /* blueMessage.png */,
 			);
 			name = Service;
 			path = resourse;
@@ -547,7 +539,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3D21FC517F0AAAE0016EFAD /* CLServiceController.xib in Resources */,
 				C3CED12917F5875A002EB8FF /* icon.png in Resources */,
 				C3CED12E17F58C0C002EB8FF /* Default-568h@2x.png in Resources */,
 				C3D21F8C17F096700016EFAD /* InfoPlist.strings in Resources */,
@@ -625,7 +616,6 @@
 				C3CED0C317F2B9A9002EB8FF /* CLBashData.m in Sources */,
 				C3D21F9217F096700016EFAD /* CLAppDelegate.m in Sources */,
 				C3CED11817F3FFE2002EB8FF /* listDB.xcdatamodeld in Sources */,
-				C3D21FC417F0AAAE0016EFAD /* CLServiceController.m in Sources */,
 				C3D73CC818031FEA00B04EFF /* CLGallaryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
