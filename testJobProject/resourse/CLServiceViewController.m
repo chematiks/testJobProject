@@ -13,6 +13,7 @@
 
 #define statusBarHeight 20
 #define tabBarHeigth 49
+#define screen [[UIScreen mainScreen]bounds].size
 
 @interface CLServiceViewController ()
 
@@ -24,20 +25,25 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        CGSize screen=[[UIScreen mainScreen]bounds].size;
-        self.trobber=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        UIActivityIndicatorView * trob=[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        self.trobber=trob;
+        [trob release];
         [self.trobber setHidesWhenStopped:YES];
         CGRect rect=self.trobber.frame;
         rect.origin.x=(screen.width-rect.size.width)/2;
         rect.origin.y=(screen.height-rect.size.height)/2;
         self.trobber.frame=rect;
-        self.tableView=[[UITableView alloc] initWithFrame:
+        UITableView * table=[[UITableView alloc] initWithFrame:
                         CGRectMake(0, statusBarHeight, screen.width, screen.height-statusBarHeight-tabBarHeigth)];
+        self.tableView=table;
+        [table release];
         self.tableView.dataSource=self;
         self.tableView.delegate=self;
         [self.view addSubview:self.tableView];
         [self.view addSubview:self.trobber];
+       
         [self.trobber startAnimating];
+
         // Custom initialization
     }
     return self;
@@ -122,8 +128,9 @@
     CGRect newframe=textViewInCell.frame;
     newframe.size=CGSizeMake(fmaxf(newSize.width, fixedWidth), newSize.height);
     textViewInCell.frame=newframe;
-    return textViewInCell.frame.size.height+20;
-    return 44+5*indexPath.row;
+    float result=textViewInCell.frame.size.height+20;
+    [textViewInCell release];
+    return result;
 }
 
 -(void) makeBackgroundCell:(CLServiceCell *) cell indexPath:(NSIndexPath *)indexPath
@@ -143,6 +150,7 @@
 
     [cell addSubview:backgroundImageView];
     [cell sendSubviewToBack:backgroundImageView];
+    [backgroundImageView release];
 }
 
 //show data and trobber off
@@ -170,6 +178,7 @@
     textViewInCell.text=bash.textNote;
 
     [cell addSubview:textViewInCell];
+    [textViewInCell release];
     cell.textView=textViewInCell;
   
     CGFloat fixedWidth=textViewInCell.frame.size.width;

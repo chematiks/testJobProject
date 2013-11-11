@@ -15,8 +15,12 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
-        self.numberLabel=[[UILabel alloc] initWithFrame:CGRectMake(3, 1, 154, 8)];
-        self.dateLabel=[[UILabel alloc] initWithFrame:CGRectMake(157, 1, 154, 8)];
+        UILabel * number=[[UILabel alloc] initWithFrame:CGRectMake(3, 1, 154, 8)];
+        self.numberLabel=number;
+        [number release];
+        UILabel * date=[[UILabel alloc] initWithFrame:CGRectMake(157, 1, 154, 8)];
+        self.dateLabel=date;
+        [date release];
         
         UIFont * font=[UIFont boldSystemFontOfSize:10];
         self.numberLabel.font=font;
@@ -24,13 +28,12 @@
         
         self.dateLabel.font=font;
         self.dateLabel.textColor=[UIColor grayColor];
-        
         self.dateLabel.textAlignment=NSTextAlignmentRight;
-        
+       
         [self addSubview:self.numberLabel];
         [self addSubview:self.dateLabel];
-        
-    }
+    
+   }
     return self;
 }
 
