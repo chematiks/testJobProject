@@ -172,7 +172,8 @@
     CLBashData * bash=[self.arrayNote objectAtIndex:indexPath.row];
 
     cell.numberLabel.text=[NSString stringWithFormat:@"#%@",bash.idNote];
-    cell.dateLabel.text=bash.dateNote;
+    cell.dateLabel.text = bash.dateNote;
+    
     
     UITextView * textViewInCell=[[UITextView alloc] initWithFrame:CGRectMake(10, 8+10, 300, 100)];
     textViewInCell.text=bash.textNote;
