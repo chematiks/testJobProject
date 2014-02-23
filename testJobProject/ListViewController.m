@@ -14,6 +14,7 @@
 #import "Worker.h"
 #import "Direction.h"
 #import "Bookkeeping.h"
+#import "CLMDetailViewController.h"
 
 @interface ListViewController ()
 
@@ -216,11 +217,19 @@
 //if press on row
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    CLMDetailViewController * detailController = [[CLMDetailViewController alloc] init];
+    [[CLDataBaseDelegate sharedDB] setCurrentObject:[_fetchedResultsController objectAtIndexPath:indexPath]];
+    
+    //detailController.employee =[_fetchedResultsController objectAtIndexPath:indexPath];
+    [[self navigationController] pushViewController:detailController animated:YES];
+    
+    [detailController release];
+  /*
     CLDetailListViewController * detailViewController=[[CLDetailListViewController alloc] init];
     [[CLDataBaseDelegate sharedDB] setCurrentObject:[_fetchedResultsController objectAtIndexPath:indexPath]];
     [detailViewController initDataInDetailView:[_fetchedResultsController objectAtIndexPath:indexPath]];
     [[self navigationController] pushViewController:detailViewController animated:YES];
-    [detailViewController release];
+    [detailViewController release];*/
 }
 
 //init editing style

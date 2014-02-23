@@ -11,6 +11,7 @@
 		84E6005C182B6BEB00AB7B2C /* CLServiceCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E6005B182B6BEB00AB7B2C /* CLServiceCell.m */; };
 		84E60062182CCCA800AB7B2C /* blueMessage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84E60061182CCCA800AB7B2C /* blueMessage.png */; };
 		84E60064182CCCB400AB7B2C /* grayMessage.png in Resources */ = {isa = PBXBuildFile; fileRef = 84E60063182CCCB400AB7B2C /* grayMessage.png */; };
+		9230725118BA568200FC5E9F /* CLMDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9230725018BA568200FC5E9F /* CLMDetailViewController.m */; };
 		C3670C7017F13D7000F96F6D /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3670C5E17F13D7000F96F6D /* 1.jpg */; };
 		C3670C7117F13D7000F96F6D /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3670C5F17F13D7000F96F6D /* 2.jpg */; };
 		C3670C7217F13D7000F96F6D /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3670C6017F13D7000F96F6D /* 3.jpg */; };
@@ -96,6 +97,8 @@
 		84E6005B182B6BEB00AB7B2C /* CLServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLServiceCell.m; sourceTree = "<group>"; };
 		84E60061182CCCA800AB7B2C /* blueMessage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueMessage.png; path = testJobProject/blueMessage.png; sourceTree = SOURCE_ROOT; };
 		84E60063182CCCB400AB7B2C /* grayMessage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayMessage.png; path = testJobProject/grayMessage.png; sourceTree = SOURCE_ROOT; };
+		9230724F18BA568200FC5E9F /* CLMDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLMDetailViewController.h; sourceTree = "<group>"; };
+		9230725018BA568200FC5E9F /* CLMDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLMDetailViewController.m; sourceTree = "<group>"; };
 		C3670C5E17F13D7000F96F6D /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		C3670C5F17F13D7000F96F6D /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		C3670C6017F13D7000F96F6D /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
@@ -213,6 +216,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9230724E18BA4C1300FC5E9F /* List 2 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = "List 2";
+			sourceTree = "<group>";
+		};
 		C3670C5D17F13D7000F96F6D /* pictures */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,6 +367,7 @@
 		C3D21F8717F096700016EFAD /* testJobProject */ = {
 			isa = PBXGroup;
 			children = (
+				9230724E18BA4C1300FC5E9F /* List 2 */,
 				C3D21FC617F0B1F20016EFAD /* resourse */,
 				C3D21F9017F096700016EFAD /* CLAppDelegate.h */,
 				C3D21F9117F096700016EFAD /* CLAppDelegate.m */,
@@ -458,6 +469,8 @@
 				C3E76BCE17F49AFF0053BBF7 /* CLDetailListViewController.xib */,
 				C3D5F8BF180A832500C6B40E /* CLDataBaseDelegate.h */,
 				C3D5F8C0180A832500C6B40E /* CLDataBaseDelegate.m */,
+				9230724F18BA568200FC5E9F /* CLMDetailViewController.h */,
+				9230725018BA568200FC5E9F /* CLMDetailViewController.m */,
 			);
 			name = List;
 			path = resourse;
@@ -597,6 +610,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9230725118BA568200FC5E9F /* CLMDetailViewController.m in Sources */,
 				84E6005C182B6BEB00AB7B2C /* CLServiceCell.m in Sources */,
 				C3FB6FE6180BB1E30035F79A /* Direction.m in Sources */,
 				C3BE31891806915800C39B88 /* DDXMLNode.m in Sources */,

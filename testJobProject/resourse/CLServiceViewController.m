@@ -57,7 +57,7 @@
     NSURL * url=[[NSURL alloc] initWithString:stringURL];
     NSData * dataXML=[[NSData alloc] initWithContentsOfURL:url];
     [url release];
-    NSError * error;
+    NSError * error = 0;
     DDXMLDocument * doc1=[[DDXMLDocument alloc] initWithData:dataXML options:0 error:&error];
     if (error)
     {
