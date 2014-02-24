@@ -97,8 +97,8 @@
 		84E6005B182B6BEB00AB7B2C /* CLServiceCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLServiceCell.m; sourceTree = "<group>"; };
 		84E60061182CCCA800AB7B2C /* blueMessage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = blueMessage.png; path = testJobProject/blueMessage.png; sourceTree = SOURCE_ROOT; };
 		84E60063182CCCB400AB7B2C /* grayMessage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = grayMessage.png; path = testJobProject/grayMessage.png; sourceTree = SOURCE_ROOT; };
-		9230724F18BA568200FC5E9F /* CLMDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLMDetailViewController.h; sourceTree = "<group>"; };
-		9230725018BA568200FC5E9F /* CLMDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLMDetailViewController.m; sourceTree = "<group>"; };
+		9230724F18BA568200FC5E9F /* CLMDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLMDetailViewController.h; path = resourse/CLMDetailViewController.h; sourceTree = "<group>"; };
+		9230725018BA568200FC5E9F /* CLMDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLMDetailViewController.m; path = resourse/CLMDetailViewController.m; sourceTree = "<group>"; };
 		C3670C5E17F13D7000F96F6D /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		C3670C5F17F13D7000F96F6D /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		C3670C6017F13D7000F96F6D /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
@@ -175,9 +175,9 @@
 		C3D73CC618031FEA00B04EFF /* CLGallaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLGallaryViewController.m; path = ../CLGallaryViewController.m; sourceTree = "<group>"; };
 		C3D73CC718031FEA00B04EFF /* CLGallaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CLGallaryViewController.xib; path = ../CLGallaryViewController.xib; sourceTree = "<group>"; };
 		C3DF03A7180C483500804FED /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
-		C3E76BCC17F49AFF0053BBF7 /* CLDetailListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLDetailListViewController.h; path = resourse/CLDetailListViewController.h; sourceTree = "<group>"; };
-		C3E76BCD17F49AFF0053BBF7 /* CLDetailListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLDetailListViewController.m; path = resourse/CLDetailListViewController.m; sourceTree = "<group>"; };
-		C3E76BCE17F49AFF0053BBF7 /* CLDetailListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CLDetailListViewController.xib; path = resourse/CLDetailListViewController.xib; sourceTree = "<group>"; };
+		C3E76BCC17F49AFF0053BBF7 /* CLDetailListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLDetailListViewController.h; sourceTree = "<group>"; };
+		C3E76BCD17F49AFF0053BBF7 /* CLDetailListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLDetailListViewController.m; sourceTree = "<group>"; };
+		C3E76BCE17F49AFF0053BBF7 /* CLDetailListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CLDetailListViewController.xib; sourceTree = "<group>"; };
 		C3E7946418113B1D008F23A2 /* keyDoneHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyDoneHighlighted.png; path = testJobProject/Images.xcassets/keyDoneHighlighted.png; sourceTree = SOURCE_ROOT; };
 		C3E7946518113B1D008F23A2 /* keyDoneNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyDoneNormal.png; path = testJobProject/Images.xcassets/keyDoneNormal.png; sourceTree = SOURCE_ROOT; };
 		C3FB6FDE180BB1E30035F79A /* Bookkeeping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bookkeeping.h; sourceTree = "<group>"; };
@@ -219,9 +219,8 @@
 		9230724E18BA4C1300FC5E9F /* archive */ = {
 			isa = PBXGroup;
 			children = (
-				C3E76BCC17F49AFF0053BBF7 /* CLDetailListViewController.h */,
-				C3E76BCD17F49AFF0053BBF7 /* CLDetailListViewController.m */,
-				C3E76BCE17F49AFF0053BBF7 /* CLDetailListViewController.xib */,
+				9230724F18BA568200FC5E9F /* CLMDetailViewController.h */,
+				9230725018BA568200FC5E9F /* CLMDetailViewController.m */,
 			);
 			name = archive;
 			sourceTree = "<group>";
@@ -469,8 +468,9 @@
 				C39487511814527D00B0B8FC /* CLListTableViewCell.m */,
 				C3D5F8BC180A81D700C6B40E /* ListViewController.h */,
 				C3D5F8BD180A81D700C6B40E /* ListViewController.m */,
-				9230724F18BA568200FC5E9F /* CLMDetailViewController.h */,
-				9230725018BA568200FC5E9F /* CLMDetailViewController.m */,
+				C3E76BCC17F49AFF0053BBF7 /* CLDetailListViewController.h */,
+				C3E76BCD17F49AFF0053BBF7 /* CLDetailListViewController.m */,
+				C3E76BCE17F49AFF0053BBF7 /* CLDetailListViewController.xib */,
 			);
 			name = List;
 			path = resourse;

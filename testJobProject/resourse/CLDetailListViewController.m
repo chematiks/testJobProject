@@ -98,6 +98,16 @@
     [self.view addSubview:labelTypeBuch];
     [self.view addSubview:fieldTypeBuch];
     [self createPicker];
+    
+    _surnameField.tag = 0;
+    _nameLabel.tag = 1;
+    _patronymicLabel.tag = 2;
+    _salaryLabel.tag = 3;
+    fieldDetailTimeFrom.tag = 4;
+    fieldDetailTimeTo.tag = 5;
+    fieldSeatNumber.tag = 6;
+    fieldTypeBuch.tag = 7;
+    
 }
 
 //hidden all keyboards
@@ -444,24 +454,37 @@
     toolbar.barTintColor=[UIColor colorWithRed:0.73 green:0.835 blue:0.992 alpha:0.9];
     [toolbar sizeToFit];
     
-    UIBarButtonItem * buttonCancel=[[UIBarButtonItem alloc]
-                                    initWithTitle:@"Cancel"
-                                    style:UIBarButtonItemStyleBordered
-                                    target:self
-                                    action:@selector(downButtonPress:)];
+   /* UIBarButtonItem * buttonDone=[[UIBarButtonItem alloc]
+                                  initWithTitle:@"Done"
+                                  style:UIBarButtonItemStyleBordered
+                                  target:self
+                                  action:@selector(downButtonPress:)];
+   */ UIBarButtonItem * buttonNext=[[UIBarButtonItem alloc]
+                                  initWithTitle:@"Next"
+                                  style:UIBarButtonItemStyleBordered
+                                  target:self
+                                  action:@selector(nextButtonPress:)];
+    UIBarButtonItem * buttonPrev=[[UIBarButtonItem alloc]
+                                  initWithTitle:@"Prev"
+                                  style:UIBarButtonItemStyleBordered
+                                  target:self
+                                  action:@selector(prevButtonPress:)];
     
-    UIBarButtonItem * buttonValueChange=[[UIBarButtonItem alloc]
+    
+    /*UIBarButtonItem * buttonValueChange=[[UIBarButtonItem alloc]
                                          initWithTitle:@"Set"
                                          style:UIBarButtonItemStyleBordered
                                          target:self
                                          action:@selector(valueChangeTimePicker:)];
     
-    UIBarButtonItem * spaceItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+   */ UIBarButtonItem * spaceItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     [spaceItem setWidth:210];
-    NSArray * toolbarItems=[[NSArray alloc] initWithObjects:buttonCancel,spaceItem,buttonValueChange, nil];
+    NSArray * toolbarItems=[[NSArray alloc] initWithObjects:buttonPrev,buttonNext, nil];
     
-    [buttonCancel release];
-    [buttonValueChange release];
+    [buttonNext release];
+    [buttonPrev release];
+    //[buttonDone release];
+   // [buttonValueChange release];
     [spaceItem release];
     
     [toolbar setItems:toolbarItems];
@@ -469,32 +492,46 @@
     [toolbarItems release];
 }
 
+-(void) nextButtonPress:(id)sender
+{
+    NSInteger tag = currentTextField.tag;
+    tag++;
+    if (tag ==8) {
+        tag = 0;
+    }
+    currentTextField = (UITextField *)[self.view viewWithTag:tag];
+
+    UIResponder * nextResponder=currentTextField;
+    [nextResponder becomeFirstResponder];
+}
+
+-(void) prevButtonPress:(id)sender
+{
+    NSInteger tag = currentTextField.tag;
+    tag--;
+    if (tag == -1) {
+        tag = 7;
+    }
+    currentTextField = (UITextField *)[self.view viewWithTag:tag];
+    
+    UIResponder * prevResponder=currentTextField;
+    [prevResponder becomeFirstResponder];
+
+}
+
+
 //if press button done, shift focus to next textfield
 -(void) downButtonPress:(id)sender
 {
-    if (currentTextField==self.salaryLabel)
-    {
-        UIResponder * nextResponder=fieldDetailTimeFrom;
-        [nextResponder becomeFirstResponder];
+    NSInteger tag = currentTextField.tag;
+    tag++;
+    if (tag ==8) {
+        tag = 0;
     }
-    else
-        if (currentTextField==fieldDetailTimeFrom)
-        {
-            UIResponder * nextResponder=fieldDetailTimeTo;
-            [nextResponder becomeFirstResponder];
-        }
-        else
-            if (currentTextField==fieldDetailTimeTo)
-            {
-                UIResponder * nextResponder=fieldSeatNumber;
-                [nextResponder becomeFirstResponder];
-            }
-            else
-                if (currentTextField==fieldSeatNumber)
-                {
-                    UIResponder * nextResponder=fieldTypeBuch;
-                    [nextResponder becomeFirstResponder];
-                }
+    currentTextField = (UITextField *)[self.view viewWithTag:tag];
+    
+    UIResponder * nextResponder=currentTextField;
+    [nextResponder becomeFirstResponder];
 }
 
 //create picker
@@ -521,7 +558,7 @@
 //show and hiddenbutton save in toolbar
 -(void) showButtonSaveInToolbar:(BOOL) show
 {
-    UIBarButtonItem * buttonValueChange=[toolbar.items objectAtIndex:2];
+   /* UIBarButtonItem * buttonValueChange=[toolbar.items objectAtIndex:3];
     if (show)
     {
         buttonValueChange.style=UIBarButtonItemStyleBordered;
@@ -533,7 +570,7 @@
         buttonValueChange.style=UIBarButtonItemStylePlain;
         buttonValueChange.enabled=NO;
         buttonValueChange.title=nil;
-    }
+    }*/
 }
 
 //up toolbar for salary and seat number text field

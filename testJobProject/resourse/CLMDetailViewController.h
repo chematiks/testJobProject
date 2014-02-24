@@ -13,6 +13,9 @@
 @protocol CLMDetailViewControllerDelegate;
 
 @interface CLMDetailViewController : UITableViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
+{
+    NSDateFormatter * timeFormat;
+}
 
 
 @property (assign, nonatomic) resourse *employee;

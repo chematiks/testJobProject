@@ -12,11 +12,20 @@
 #import "Worker.h"
 #import "Bookkeeping.h"
 
-#define kNumberOfEditableRows         4
-#define kNameRowIndex                 0
-#define kFromYearRowIndex             1
-#define kToYearRowIndex               2
-#define kPartyIndex                   3
+#define kMainSectionIndex                 0
+#define kTimeSectionIndex                 1
+#define kOtherSectionIndex                2
+
+#define kSurnameNameRowIndex              0
+#define kNameRowIndex                     1
+#define kPatronimicRowIndex               2
+#define kSalaryRowIndex                   3
+
+#define kFromTimeRowIndex                 0
+#define kToTimeRowIndex                   1
+
+#define kSeatNumberRowIndex               0
+#define kTypeBookkeepingRowIndex          1
 
 #define kLabelTag                     2048
 #define kTextFieldTag                 4094
@@ -31,7 +40,7 @@
 @end
 
 @implementation CLMDetailViewController{
-   // NSString *initialText;
+    NSString *initialText;
     BOOL hasChanges;
 }
 
@@ -46,17 +55,19 @@
         NSArray * workerFieldLabel = @[@"Seat number:"];
         NSArray * bookkeepingFieldLabel = @[@"Seat number:",@"Type bookkeeping:"];
         
-        
+        timeFormat=[[NSDateFormatter alloc] init];
+        [timeFormat setDateFormat:@"HH:mm"];
+
         self.fieldLabels = @[ employeeFieldLabel, directionFieldLabel, workerFieldLabel, bookkeepingFieldLabel];
         
         self.navigationItem.leftBarButtonItem =
         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                       target:self
                                                       action:@selector(cancel:)];
-        self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave
-                                                      target:self
-                                                      action:@selector(save:)];
+        //self.navigationItem.rightBarButtonItem =
+        //[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave
+        //                                              target:self
+        //                                              action:@selector(save:)];
     }
     return self;
 }
@@ -86,6 +97,21 @@
         return 2;
     }else
         return 3;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    if (section == 0) {
+        return @"Name and Salary";
+    }
+    if (section == 1) {
+        if ([_employee isMemberOfClass:[Direction class]]) {
+            return @"Business time:";
+        }else{
+            return @"Dinner time:";
+        }
+    }
+    return @"Other options:";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -144,24 +170,65 @@
             label.text = self.fieldLabels[indexPath.section+1][indexPath.row];
     
     UITextField *textField = (id)[cell viewWithTag:kTextFieldTag];
-    
-  /*  textField.superview.tag = indexPath.row;
-    switch (indexPath.row) {
-        case kNameRowIndex:
-            textField.text = self.employee.name;
-            break;
-        case kFromYearRowIndex:
-            textField.text = self.employee.patronymic;
-            break;
-        case kToYearRowIndex:
-            textField.text = self.employee.surname;
-            break;
-        case kPartyIndex:
-            textField.text = [self.employee.salary stringValue];
-            break;
-        default:
-            break;
-    }*/
+    textField.enabled = NO;
+    textField.superview.tag = indexPath.row;
+    if (indexPath.section == kMainSectionIndex) {
+        switch (indexPath.row) {
+            case kSurnameNameRowIndex:
+                textField.text = self.employee.surname;
+                break;
+            case kNameRowIndex:
+                textField.text = self.employee.name;
+                break;
+            case kPatronimicRowIndex:
+                textField.text = self.employee.patronymic;
+                break;
+            case kSalaryRowIndex:
+                textField.text = [self.employee.salary stringValue];
+                break;
+            default:
+                break;
+        }
+    }else
+        if (indexPath.section == kTimeSectionIndex) {
+            switch (indexPath.row) {
+                case kFromTimeRowIndex:
+                    if ([_employee isMemberOfClass:[Direction class]]) {
+                        Direction * direction = _employee;
+                        textField.text = [timeFormat stringFromDate:direction.businessHourStart];
+                    }
+                    else
+                    {
+                        Worker * worker = _employee;
+                        textField.text = [timeFormat stringFromDate: worker.dinnerTimeStart];
+                    }
+                    break;
+                case kToTimeRowIndex:
+                    if ([_employee isMemberOfClass:[Direction class]]) {
+                        Direction * direction = _employee;
+                        textField.text = [timeFormat stringFromDate:direction.businessHourFinish];
+                    }
+                    else
+                    {
+                        Worker * worker = _employee;
+                        textField.text = [timeFormat stringFromDate: worker.dinnerTimeFinish];
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+        }
+        else {
+            if (indexPath.row == kSeatNumberRowIndex) {
+                Worker * worker = _employee;
+                textField.text = [worker.seatNumber stringValue];
+            }
+            if (indexPath.row == kTypeBookkeepingRowIndex) {
+                Bookkeeping * bookkeeping = _employee;
+                textField.text = bookkeeping.typeBookkeeping;
+            }
+        }
     return cell;
 }
 
@@ -183,7 +250,7 @@
 
 - (void)textFieldDone:(id)sender
 {
-    [sender resignFirstResponder];
+   /* [sender resignFirstResponder];
     UITextField *senderField = sender;
     NSInteger nextRow = (senderField.superview.tag + 1) % kNumberOfEditableRows;
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:nextRow
@@ -191,15 +258,16 @@
     UITableViewCell *nextCell = [self.tableView cellForRowAtIndexPath:indexPath];
     UITextField *nextField = (id)[nextCell viewWithTag:kTextFieldTag];
     [nextField becomeFirstResponder];
+    */
 }
 
-/*
+
 
  - (void)textFieldDidBeginEditing:(UITextField *)textField
  {
- initialText = textField.text;
+     initialText = textField.text;
  }
- 
+/*
  
  - (void)textFieldDidEndEditing:(UITextField *)textField
  {
