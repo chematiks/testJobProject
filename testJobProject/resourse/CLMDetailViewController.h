@@ -12,11 +12,11 @@
 
 @protocol CLMDetailViewControllerDelegate;
 
-@interface CLMDetailViewController : UITableViewController <UITextFieldDelegate>
+@interface CLMDetailViewController : UITableViewController <UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 
 
-@property (copy, nonatomic) resourse *employee;
-@property ( nonatomic) id<CLMDetailViewControllerDelegate> delegate;
+@property (assign, nonatomic) resourse *employee;
+//@property (assign, nonatomic) id<CLMDetailViewControllerDelegate> delegate;
 @property (assign, nonatomic) NSInteger row;
 
 @property (strong, nonatomic) NSArray *fieldLabels;
@@ -26,7 +26,7 @@
 - (IBAction)textFieldDone:(id)sender;
 
 @end
-
+/*
 @protocol CLMDetailViewControllerDelegate <NSObject>
 
 - (void)employeeDetailViewController:(CLMDetailViewController *)controller
@@ -34,3 +34,4 @@
 
 @end
 
+*/

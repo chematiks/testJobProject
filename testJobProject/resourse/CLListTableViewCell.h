@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CLListTableViewCell : UITableViewCell
+@interface CLListTableViewCell : UITableViewCell 
 {
     UIView * _mainViewCell;
     UILabel * _surnameNameLabel;

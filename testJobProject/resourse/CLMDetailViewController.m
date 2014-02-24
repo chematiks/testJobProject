@@ -8,6 +8,9 @@
 
 #import "CLMDetailViewController.h"
 #import "resourse.h"
+#import "Direction.h"
+#import "Worker.h"
+#import "Bookkeeping.h"
 
 #define kNumberOfEditableRows         4
 #define kNameRowIndex                 0
@@ -17,6 +20,11 @@
 
 #define kLabelTag                     2048
 #define kTextFieldTag                 4094
+
+#define kIndexEmployee 0
+#define kIndexDirection 1
+#define kIndexWorker 2
+#define kIndexBookkeeping 3
 
 @interface CLMDetailViewController ()
 
@@ -32,7 +40,15 @@
     self = [super initWithStyle:UITableViewStyleGrouped];
     if (self) {
         // Custom initialization
-        self.fieldLabels = @[@"Name:", @"From:", @"To:", @"Party:"];
+        
+        NSArray * employeeFieldLabel = @[@"Surname:", @"Name:", @"Patronical:", @"Salary:"];
+        NSArray * directionFieldLabel = @[@"To:", @"From:"];
+        NSArray * workerFieldLabel = @[@"Seat number:"];
+        NSArray * bookkeepingFieldLabel = @[@"Seat number:",@"Type bookkeeping:"];
+        
+        
+        self.fieldLabels = @[ employeeFieldLabel, directionFieldLabel, workerFieldLabel, bookkeepingFieldLabel];
+        
         self.navigationItem.leftBarButtonItem =
         [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                                                       target:self
@@ -50,10 +66,10 @@
     [super viewDidLoad];
     self.tableView.allowsSelection = NO;
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+     self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
 - (void)didReceiveMemoryWarning
@@ -64,10 +80,33 @@
 
 #pragma mark - Table view data source
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    if ([_employee isMemberOfClass:[Direction class]]) {
+        return 2;
+    }else
+        return 3;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return kNumberOfEditableRows;
-
+    if (section == 0) {
+        NSArray * array = [self.fieldLabels objectAtIndex:kIndexEmployee];
+        return array.count;
+    }else
+        if (section == 1) {
+            return 2;
+        }else
+            if (section == 2) {
+                if ([_employee isMemberOfClass:[Worker class]]) {
+                    NSArray * array = self.fieldLabels[kIndexWorker];
+                    return array.count;
+                }else{
+                    NSArray * array = self.fieldLabels[kIndexBookkeeping];
+                    return array.count;
+                }
+            }
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -77,32 +116,36 @@
                              CellIdentifier];
     if (cell == nil) {
         
-        cell = [[UITableViewCell alloc]
-                initWithStyle:UITableViewCellStyleDefault
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
                 reuseIdentifier:CellIdentifier];
-        UILabel *label = [[UILabel alloc] initWithFrame:
-                          CGRectMake(10, 10, 75, 25)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 125, 25)];
         label.tag = kLabelTag;
         label.textAlignment = NSTextAlignmentRight;
         label.font = [UIFont boldSystemFontOfSize:14];
         [cell.contentView addSubview:label];
         
         UITextField *textField = [[UITextField alloc] initWithFrame:
-                                  CGRectMake(90, 12, 200, 25)];
+                                  CGRectMake(140, 12, 200, 25)];
         textField.tag = kTextFieldTag;
         textField.clearsOnBeginEditing = NO;
         textField.delegate = self;
-        [textField addTarget:self
-                      action:@selector(textFieldDone:)
+        [textField addTarget:self action:@selector(textFieldDone:)
             forControlEvents:UIControlEventEditingDidEndOnExit];
         [cell.contentView addSubview:textField];
     }
     
     UILabel *label = (id)[cell viewWithTag:kLabelTag];
-    label.text = self.fieldLabels[indexPath.row];
+    if (indexPath.section < 2) {
+        label.text = self.fieldLabels[indexPath.section][indexPath.row];
+    }else
+        if ([_employee isMemberOfClass:[Worker class]]) {
+            label.text = self.fieldLabels[indexPath.section][indexPath.row];
+        }else
+            label.text = self.fieldLabels[indexPath.section+1][indexPath.row];
     
     UITextField *textField = (id)[cell viewWithTag:kTextFieldTag];
-    textField.superview.tag = indexPath.row;
+    
+  /*  textField.superview.tag = indexPath.row;
     switch (indexPath.row) {
         case kNameRowIndex:
             textField.text = self.employee.name;
@@ -118,7 +161,7 @@
             break;
         default:
             break;
-    }
+    }*/
     return cell;
 }
 

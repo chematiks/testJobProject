@@ -95,10 +95,11 @@ static CLDataBaseDelegate * dataBaseDelegate;
     fetchRequest.entity=entity;
     fetchRequest.sortDescriptors=sortDescriptors;
     fetchRequest.predicate=predicate;
-    fetchResultController=[[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest
-                                                              managedObjectContext:self.managedObjectContext
-                                                                sectionNameKeyPath:sectionNameKeyPath
-                                                                         cacheName:nil];
+    fetchResultController=[[NSFetchedResultsController alloc]
+                           initWithFetchRequest:fetchRequest
+                           managedObjectContext:self.managedObjectContext
+                             sectionNameKeyPath:sectionNameKeyPath
+                                      cacheName:nil];
     [fetchRequest release];
     NSError * error=nil;
     BOOL success=[fetchResultController performFetch:&error];
@@ -114,8 +115,9 @@ static CLDataBaseDelegate * dataBaseDelegate;
 
 -(id) createEntytiWithClassName:(NSString *)className attributesDictionary:(NSDictionary *)attributesDictionary
 {
-    NSManagedObject * entity=[NSEntityDescription insertNewObjectForEntityForName:className
-                                                           inManagedObjectContext:self.managedObjectContext];
+    NSManagedObject * entity=[NSEntityDescription
+                              insertNewObjectForEntityForName:className
+                                       inManagedObjectContext:self.managedObjectContext];
     [attributesDictionary enumerateKeysAndObjectsUsingBlock:
      ^(NSString * key,id obj,BOOL * stop){[entity setValue:obj forKey:key];}];
     

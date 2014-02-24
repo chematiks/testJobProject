@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "CLDataBaseDelegate.h"
 #import "constants.h"
+#import "CLMDetailViewController.h"
 
 @interface ListViewController : UITableViewController <UITableViewDataSource,NSFetchedResultsControllerDelegate>
 {

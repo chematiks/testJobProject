@@ -7,6 +7,8 @@
 //
 
 #import "resourse.h"
+#import "CLDataBaseDelegate.h"
+#import "constants.h"
 
 
 @implementation resourse
@@ -16,5 +18,21 @@
 @dynamic patronymic;
 @dynamic salary;
 @dynamic surname;
+/*
+- (id)copyWithZone:(NSZone *)zone;
+{
+    resourse *copy = [[CLDataBaseDelegate sharedDB]
+                               newFetchEntitiesWithClassName:eStaff
+                               sortDescriptors:nil
+                               sectionNameKeyPath:kCategory
+                               predicate:nil];
+    copy.surname = self.surname;
+    copy.name = self.name;
+    copy.patronymic = self.patronymic;
+    copy.salary = self.salary;
+    copy.category = self.category;
+    return copy;
+}
 
+*/
 @end

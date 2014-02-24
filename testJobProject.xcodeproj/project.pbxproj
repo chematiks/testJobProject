@@ -175,9 +175,9 @@
 		C3D73CC618031FEA00B04EFF /* CLGallaryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLGallaryViewController.m; path = ../CLGallaryViewController.m; sourceTree = "<group>"; };
 		C3D73CC718031FEA00B04EFF /* CLGallaryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CLGallaryViewController.xib; path = ../CLGallaryViewController.xib; sourceTree = "<group>"; };
 		C3DF03A7180C483500804FED /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
-		C3E76BCC17F49AFF0053BBF7 /* CLDetailListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CLDetailListViewController.h; sourceTree = "<group>"; };
-		C3E76BCD17F49AFF0053BBF7 /* CLDetailListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CLDetailListViewController.m; sourceTree = "<group>"; };
-		C3E76BCE17F49AFF0053BBF7 /* CLDetailListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CLDetailListViewController.xib; sourceTree = "<group>"; };
+		C3E76BCC17F49AFF0053BBF7 /* CLDetailListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CLDetailListViewController.h; path = resourse/CLDetailListViewController.h; sourceTree = "<group>"; };
+		C3E76BCD17F49AFF0053BBF7 /* CLDetailListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CLDetailListViewController.m; path = resourse/CLDetailListViewController.m; sourceTree = "<group>"; };
+		C3E76BCE17F49AFF0053BBF7 /* CLDetailListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = CLDetailListViewController.xib; path = resourse/CLDetailListViewController.xib; sourceTree = "<group>"; };
 		C3E7946418113B1D008F23A2 /* keyDoneHighlighted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyDoneHighlighted.png; path = testJobProject/Images.xcassets/keyDoneHighlighted.png; sourceTree = SOURCE_ROOT; };
 		C3E7946518113B1D008F23A2 /* keyDoneNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = keyDoneNormal.png; path = testJobProject/Images.xcassets/keyDoneNormal.png; sourceTree = SOURCE_ROOT; };
 		C3FB6FDE180BB1E30035F79A /* Bookkeeping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Bookkeeping.h; sourceTree = "<group>"; };
@@ -216,11 +216,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		9230724E18BA4C1300FC5E9F /* List 2 */ = {
+		9230724E18BA4C1300FC5E9F /* archive */ = {
 			isa = PBXGroup;
 			children = (
+				C3E76BCC17F49AFF0053BBF7 /* CLDetailListViewController.h */,
+				C3E76BCD17F49AFF0053BBF7 /* CLDetailListViewController.m */,
+				C3E76BCE17F49AFF0053BBF7 /* CLDetailListViewController.xib */,
 			);
-			name = "List 2";
+			name = archive;
 			sourceTree = "<group>";
 		};
 		C3670C5D17F13D7000F96F6D /* pictures */ = {
@@ -367,7 +370,7 @@
 		C3D21F8717F096700016EFAD /* testJobProject */ = {
 			isa = PBXGroup;
 			children = (
-				9230724E18BA4C1300FC5E9F /* List 2 */,
+				9230724E18BA4C1300FC5E9F /* archive */,
 				C3D21FC617F0B1F20016EFAD /* resourse */,
 				C3D21F9017F096700016EFAD /* CLAppDelegate.h */,
 				C3D21F9117F096700016EFAD /* CLAppDelegate.m */,
@@ -459,16 +462,13 @@
 			children = (
 				C3D83D68180D155900DBB3EF /* resourse */,
 				C3CED12617F57EC1002EB8FF /* imageHeaderSection */,
+				C3D5F8BF180A832500C6B40E /* CLDataBaseDelegate.h */,
+				C3D5F8C0180A832500C6B40E /* CLDataBaseDelegate.m */,
 				C3CED11617F3FFE2002EB8FF /* listDB.xcdatamodeld */,
 				C39487501814527D00B0B8FC /* CLListTableViewCell.h */,
 				C39487511814527D00B0B8FC /* CLListTableViewCell.m */,
 				C3D5F8BC180A81D700C6B40E /* ListViewController.h */,
 				C3D5F8BD180A81D700C6B40E /* ListViewController.m */,
-				C3E76BCC17F49AFF0053BBF7 /* CLDetailListViewController.h */,
-				C3E76BCD17F49AFF0053BBF7 /* CLDetailListViewController.m */,
-				C3E76BCE17F49AFF0053BBF7 /* CLDetailListViewController.xib */,
-				C3D5F8BF180A832500C6B40E /* CLDataBaseDelegate.h */,
-				C3D5F8C0180A832500C6B40E /* CLDataBaseDelegate.m */,
 				9230724F18BA568200FC5E9F /* CLMDetailViewController.h */,
 				9230725018BA568200FC5E9F /* CLMDetailViewController.m */,
 			);
@@ -521,7 +521,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = CL;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = ChematiksLabs;
 				TargetAttributes = {
 					C3D21F9817F096710016EFAD = {
@@ -676,7 +676,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -715,7 +714,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -780,7 +778,6 @@
 		C3D21FAE17F096710016EFAD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/testJobProject.app/testJobProject";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -803,7 +800,6 @@
 		C3D21FAF17F096710016EFAD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/testJobProject.app/testJobProject";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

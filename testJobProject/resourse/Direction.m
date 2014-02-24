@@ -14,4 +14,12 @@
 @dynamic businessHourFinish;
 @dynamic businessHourStart;
 
+/*- (id)copyWithZone:(NSZone *)zone
+{
+    Direction *direction = [[[self class] allocWithZone:zone] init];
+    direction.businessHourStart = self.businessHourStart;
+    direction.businessHourFinish = self.businessHourFinish;
+    return direction;
+}
+*/
 @end

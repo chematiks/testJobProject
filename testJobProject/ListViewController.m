@@ -220,7 +220,9 @@
     CLMDetailViewController * detailController = [[CLMDetailViewController alloc] init];
     [[CLDataBaseDelegate sharedDB] setCurrentObject:[_fetchedResultsController objectAtIndexPath:indexPath]];
     
-    //detailController.employee =[_fetchedResultsController objectAtIndexPath:indexPath];
+    
+    //resourse * test = [_fetchedResultsController objectAtIndexPath:indexPath];
+    detailController.employee = [_fetchedResultsController objectAtIndexPath:indexPath];
     [[self navigationController] pushViewController:detailController animated:YES];
     
     [detailController release];

@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 
 
-@interface resourse : NSManagedObject
+@interface resourse : NSManagedObject// <NSCopying>
 
 @property (nonatomic, retain) NSString * category;
 @property (nonatomic, retain) NSString * name;
