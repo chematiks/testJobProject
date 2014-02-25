@@ -129,27 +129,8 @@
 //if press button return, switch to next textField
 -(BOOL) textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField==self.surnameField)
-    {
-        UIResponder * nextResponder=self.nameLabel;
-        [nextResponder becomeFirstResponder];
-        return NO;
-    }
-    else
-        if (textField==self.nameLabel)
-        {
-            UIResponder * nextResponder=self.patronymicLabel;
-            [nextResponder becomeFirstResponder];
-            return NO;
-        }
-        else
-            if (textField==self.patronymicLabel)
-            {
-                UIResponder * nextResponder=self.salaryLabel;
-                [nextResponder becomeFirstResponder];
-                return NO;
-            }
-    return YES;
+    [self nextButtonPress:nil];
+    return NO;
 }
 
 - (void)viewDidLoad
@@ -166,7 +147,10 @@
     fieldTypeBuch.delegate=self;
 
     //add button to navigation bar
-    UIBarButtonItem * editButton=[[UIBarButtonItem alloc] initWithTitle:@"Edit" style:UIBarButtonItemStylePlain target:self action:@selector(unlockInterface:)];
+    UIBarButtonItem * editButton=[[UIBarButtonItem alloc] initWithTitle:@"Edit"
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(unlockInterface:)];
     [self.navigationItem setRightBarButtonItem:editButton];
     
 }
@@ -175,7 +159,7 @@
 -(void) initDataInDetailView:(id) object
 {
     [self initInterfaceLabelAndField];
-    [self lockInterface];
+    [self modeInterface:NO];
     [self setBasicField:object];
     if ([object class]==[Direction class])
     {
@@ -230,39 +214,28 @@
     fieldDetailTimeTo.text=[timeFormat stringFromDate:object.dinnerTimeFinish];
 }
 
-//method lock interface
--(void) lockInterface
-{
-    self.nameLabel.enabled=NO;
-    self.surnameField.enabled=NO;
-    self.patronymicLabel.enabled=NO;
-    self.salaryLabel.enabled=NO;
-    self.segmentControl.enabled=NO;
-    fieldDetailTimeFrom.enabled=NO;
-    fieldDetailTimeTo.enabled=NO;
-    fieldSeatNumber.enabled=NO;
-    fieldTypeBuch.enabled=NO;
-}
-
-//method unlock interface and add button save
+//method lock and unlock interface
 -(void) unlockInterface:(id)sender
 {
-    UIBarButtonItem * saveButton=[[UIBarButtonItem alloc]
-                                  initWithTitle:@"Save"
-                                  style:UIBarButtonItemStylePlain
-                                  target:self
-                                  action:@selector(saveButtonPress:)];
-    [self.navigationItem setRightBarButtonItem:saveButton];
-    self.nameLabel.enabled=YES;
-    self.surnameField.enabled=YES;
-    self.patronymicLabel.enabled=YES;
-    self.salaryLabel.enabled=YES;
-    self.segmentControl.enabled=YES;
-    fieldDetailTimeFrom.enabled=YES;
-    fieldDetailTimeTo.enabled=YES;
-    fieldSeatNumber.enabled=YES;
-    fieldTypeBuch.enabled=YES;
+    [self modeInterface:YES];
 }
+
+-(void) modeInterface:(BOOL)lock
+{
+    for (int i=0; i<9; i++) {
+        UIControl * currentObject = (id)[self.view viewWithTag:i];
+        currentObject.enabled = lock;
+    }
+    if (lock) {
+        UIBarButtonItem * saveButton=[[UIBarButtonItem alloc]
+                                      initWithTitle:@"Save"
+                                      style:UIBarButtonItemStylePlain
+                                      target:self
+                                      action:@selector(saveButtonPress:)];
+        [self.navigationItem setRightBarButtonItem:saveButton];
+    }
+}
+
 
 //method save data
 -(void) saveButtonPress:(id)sender
@@ -454,12 +427,12 @@
     toolbar.barTintColor=[UIColor colorWithRed:0.73 green:0.835 blue:0.992 alpha:0.9];
     [toolbar sizeToFit];
     
-   /* UIBarButtonItem * buttonDone=[[UIBarButtonItem alloc]
+    UIBarButtonItem * buttonDone=[[UIBarButtonItem alloc]
                                   initWithTitle:@"Done"
                                   style:UIBarButtonItemStyleBordered
                                   target:self
-                                  action:@selector(downButtonPress:)];
-   */ UIBarButtonItem * buttonNext=[[UIBarButtonItem alloc]
+                                  action:@selector(doneButtonPress:)];
+    UIBarButtonItem * buttonNext=[[UIBarButtonItem alloc]
                                   initWithTitle:@"Next"
                                   style:UIBarButtonItemStyleBordered
                                   target:self
@@ -470,23 +443,15 @@
                                   target:self
                                   action:@selector(prevButtonPress:)];
     
-    
-    /*UIBarButtonItem * buttonValueChange=[[UIBarButtonItem alloc]
-                                         initWithTitle:@"Set"
-                                         style:UIBarButtonItemStyleBordered
-                                         target:self
-                                         action:@selector(valueChangeTimePicker:)];
-    
-   */ UIBarButtonItem * spaceItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
-    [spaceItem setWidth:210];
-    NSArray * toolbarItems=[[NSArray alloc] initWithObjects:buttonPrev,buttonNext, nil];
+    UIBarButtonItem * spaceItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    [spaceItem setWidth:50];
+    NSArray * toolbarItems=[[NSArray alloc] initWithObjects:buttonPrev,buttonNext,spaceItem,buttonDone, nil];
     
     [buttonNext release];
     [buttonPrev release];
-    //[buttonDone release];
+    [buttonDone release];
    // [buttonValueChange release];
     [spaceItem release];
-    
     [toolbar setItems:toolbarItems];
     
     [toolbarItems release];
@@ -516,22 +481,15 @@
     
     UIResponder * prevResponder=currentTextField;
     [prevResponder becomeFirstResponder];
-
 }
 
-
 //if press button done, shift focus to next textfield
--(void) downButtonPress:(id)sender
+-(void) doneButtonPress:(id)sender
 {
-    NSInteger tag = currentTextField.tag;
-    tag++;
-    if (tag ==8) {
-        tag = 0;
-    }
-    currentTextField = (UITextField *)[self.view viewWithTag:tag];
-    
-    UIResponder * nextResponder=currentTextField;
-    [nextResponder becomeFirstResponder];
+    [currentTextField resignFirstResponder];
+    [self downTimePicker:currentTextField];
+    [self downToolbarWithNumberPad:currentTextField];
+    currentTextField = nil;
 }
 
 //create picker
@@ -555,28 +513,9 @@
     [self downTimePicker:nil];
 }
 
-//show and hiddenbutton save in toolbar
--(void) showButtonSaveInToolbar:(BOOL) show
-{
-   /* UIBarButtonItem * buttonValueChange=[toolbar.items objectAtIndex:3];
-    if (show)
-    {
-        buttonValueChange.style=UIBarButtonItemStyleBordered;
-        buttonValueChange.enabled=YES;
-        buttonValueChange.title=@"Set";
-    }
-    else
-    {
-        buttonValueChange.style=UIBarButtonItemStylePlain;
-        buttonValueChange.enabled=NO;
-        buttonValueChange.title=nil;
-    }*/
-}
-
 //up toolbar for salary and seat number text field
 -(IBAction) upToolbarWithNumberPad:(id) sender
 {
-    [self showButtonSaveInToolbar:NO];
     [self showTimePicker:NO];
     currentTextField=sender;
     [UIView transitionWithView:pickerTimeView
@@ -595,7 +534,6 @@
 {
     currentTextField=nil;
     [self textFieldDidEndEditing:currentTextField];
-    [self showButtonSaveInToolbar:YES];
     [self showTimePicker:YES];
 }
 
@@ -612,7 +550,6 @@
         currentTextField.backgroundColor=[UIColor whiteColor];
     [self.salaryLabel resignFirstResponder];
     [fieldSeatNumber resignFirstResponder];
-    [self showButtonSaveInToolbar:YES];
     [self showTimePicker:YES];
     currentTextField=sender;
     [self textFieldDidBeginEditing:currentTextField];
